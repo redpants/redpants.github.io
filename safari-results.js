@@ -48,6 +48,7 @@ $(document).ready(function() {
   var month_url = window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/')) + "/results/" + month + "/";
   $.ajax({
     url: month_url + "results.json",
+    dataType: 'jsonp',
     success: function(data){
       console.log(data);
     },
