@@ -50,6 +50,9 @@ $(document).ready(function() {
     url: month_url + "results.json",
     success: function(data){
       console.log(data);
+    },
+    error: function(){
+      console.log("what");
     }
   });
   
