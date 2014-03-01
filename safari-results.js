@@ -1,3 +1,28 @@
+data =  
+[
+   {"name":"Akash Badshah" , "caption":"Let the games begin"                         , "image":"february0.jpg"       , "time":"2014-02-28 09:52:00"} , 
+   {"name":"Austin Freel"  , "caption":"Josh"                                        , "image":"february1.jpg"       , "time":"2014-02-28 10:37:00"} , 
+   {"name":"Josh Haimson"  , "caption":"Sniped yfEarlyLead yffDeerInTheHeadlights"   , "image":"february2.jpg"       , "time":"2014-02-28 10:38:00"} , 
+   {"name":"Josh Haimson"  , "caption":"Sniped yfEarlyLead yffDeerInTheHeadlights"   , "image":"february3.jpg"       , "time":"2014-02-28 10:39:00"} , 
+   {"name":"Austin Freel"  , "caption":"Me"                                          , "image":"february4.jpg"       , "time":"2014-02-28 10:45:00"} , 
+   {"name":"Josh Haimson"  , "caption":"Got Em coach"                                , "image":"february5.jpg"       , "time":"2014-02-28 10:59:00"} , 
+   {"name":"Victor Pontis" , "caption":"redpants in the physics bathroom"            , "image":"february6.jpg"       , "time":"2014-02-28 11:11:00"} ,
+   {"name":"Josh Haimson"  , "caption":"And the hunt continues"                      , "image":"febraury7.jpg"       , "time":"2014-02-28 11:31:00"} ,
+   {"name":"Josh Haimson"  , "caption":"Two more"                                    , "image":"febraury8.jpg"       , "time":"2014-02-28 12:00:00"} ,
+   {"name":"Josh Haimson"  , "caption":"Two more"                                    , "image":"febraury9.jpg"       , "time":"2014-02-28 12:01:00"} ,
+   {"name":"Andrew Dorne"  , "caption":"A challenger appears"                        , "image":"february10.jpg"      , "time":"2014-02-28 12:37:00"} ,
+   {"name":"Josh Haimson"  , "caption":"Do sweatpants count?"                        , "image":"february11.jpg"      , "time":"2014-02-28 14:10:00"} ,
+   {"name":"Anna Leonard"  , "caption":"My formal entry"                             , "image":"february12.jpg"      , "time":"2014-02-28 14:28:00"} ,
+   {"name":"Anna Leonard"  , "caption":"3 (but really 2) points on the way to class" , "image":"february13.jpg"      , "time":"2014-02-28 14:32:00"} ,
+   {"name":"Anna Leonard"  , "caption":"3 (but really 2) points on the way to class" , "image":"february14.jpg"      , "time":"2014-02-28 14:33:00"} ,
+   {"name":"Josh Haimson"  , "caption":"Grl u got dem paaaaaaaannnnnntzz"            , "image":"february15.jpg"      , "time":"2014-02-28 14:45:00"} ,
+   {"name":"Anna Leonard"  , "caption":"Got another"                                 , "image":"february16.jpg"      , "time":"2014-02-28 14:59:00"} ,
+   {"name":"Josh Haimson"  , "caption":"Through the saferide window"                 , "image":"february17.jpg"      , "time":"2014-02-28 15:21:00"} ,
+   {"name":"Anna Leonard"  , "caption":"Redpants Sighting at the airport"            , "image":"february18.jpg"      , "time":"2014-02-28 16:14:00"} ,
+   {"name":"Austin Freel"  , "caption":"Guy on Right"                                , "image":"february19.jpg"      , "time":"2014-02-28 16:20:00"} ,
+   {"name":"Austin Freel"  , "caption":"Sniped Long Range #Zoom"                     , "image":"february20.jpg"      , "time":"2014-02-28 16:10:00"} 
+];
+
 json = 
 {
     "timeline":
@@ -30,7 +55,7 @@ json =
             {
                 "startDate":"2011,12,10",
                 "endDate":"2011,12,11",
-                "headline":"Headline Goes Here",
+                "headline":"Bullshit",
                 "text":"<p>Body text goes here, some HTML is OK</p>",
                 "tag":"This is Optional"
             }
@@ -50,13 +75,63 @@ $(document).ready(function() {
     url: month_url + "results.json",
     dataType: 'json',
     success: function(data){
-      console.log(data);
+      addData(data);
     },
-    error: function(data){
-      console.log(data);
+    error: function(jqXHR, responseText, errorThrown){
+      console.log(errorThrown);
     }
   });
   
+  addData = function(data) {
+    var counts = _.countBy(data, 'name')
+    counts = _.pairs(counts)
+    counts = _.sortBy(counts, function(pair){
+      return -pair[1];
+    }); 
+    console.log(counts)
+    json = 
+    {
+      "timeline":
+      {
+        "headline":"Joshua Haimson wins",
+        "type":"default",
+        "text":"<p>Intro body text goes here, some HTML is ok</p>",
+        "asset": {
+            "media":"http://yourdomain_or_socialmedialink_goes_here.jpg",
+            "credit":"Credit Name Goes Here",
+            "caption":"Caption text goes here"
+        },
+        "date": [
+            {
+                "startDate":"2011,12,10",
+                "endDate":"2011,12,11",
+                "headline":"Headline Goes Here",
+                "text":"<p>Body text goes here, some HTML is OK</p>",
+                "tag":"This is Optional",
+                "classname":"optionaluniqueclassnamecanbeaddedhere",
+                "asset": {
+                    "media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
+                    "thumbnail":"optional-32x32px.jpg",
+                    "credit":"Credit Name Goes Here",
+                    "caption":"Caption text goes here"
+                }
+            }
+        ],
+        "era": [
+            {
+                "startDate":"2011,12,10",
+                "endDate":"2011,12,11",
+                "headline":"Bullshit",
+                "text":"<p>Body text goes here, some HTML is OK</p>",
+                "tag":"This is Optional"
+            }
+
+        ]
+    }
+};
+  };
+  
+  addData(data);
   createStoryJS({
     type:   'timeline',
     width:  '800',
