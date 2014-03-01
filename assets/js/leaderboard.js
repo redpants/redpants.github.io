@@ -1,8 +1,3 @@
-// test -- remove when done
-$(document).ready(function() {
-  populateLeaderboard([['test2', 4],]);
-});
-
 /*
  * Populate leaderboard table
  * @param leaderboardData: list of data points in descending order in format
