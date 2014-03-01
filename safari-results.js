@@ -41,6 +41,22 @@ json =
 
 
 $(document).ready(function() {
+  var month = document.URL.split('#')[1];
+  if(month == undefined){
+    month = "february";
+  }
+  var month_url = window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/')) + "/results/" + month + "/";
+  $.ajax({
+    url: month_url + "results.json",
+    dataType: 'json',
+    success: function(data){
+      console.log(data);
+    },
+    error: function(data){
+      console.log(data);
+    }
+  });
+  
   createStoryJS({
     type:   'timeline',
     width:  '800',
