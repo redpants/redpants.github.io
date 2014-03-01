@@ -26,6 +26,7 @@ $(document).ready(function() {
     counts = _.sortBy(counts, function(pair){
       return -pair[1];
     }); 
+    populateLeaderboard(counts);
     var total = data.length;
     var participants = counts.length;
     events = _.map(data, function(item){
