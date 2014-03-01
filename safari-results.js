@@ -82,6 +82,8 @@ $(document).ready(function() {
       height: '600',
       source: json,
       embed_id: 'my-timeline',
+      start_zoom_adjust: 1,
+      font: "SansitaOne-Kameron"
     });
   };  
   addData(data);
