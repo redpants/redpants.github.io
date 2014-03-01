@@ -18,7 +18,11 @@ h1 {
 }
 
 thead {
-    font-family: Sansita One;
-    font-size: 18px;
-    text-align: center; 
+  font-family: Sansita One;
+  font-size: 18px;
+  text-align: center; 
+}
+
+tbody {
+  font-family: Kameron;
 }
