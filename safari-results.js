@@ -55,12 +55,12 @@ $(document).ready(function() {
     var participants = counts.length;
     events = _.map(data, function(item){
       var date = new Object();
-      date.startDate = item.time;
-      date.endDate = item.time;
+      date.startDate = new Date(item.time);
       date.headline = item.caption;
       date.text = "A fine catch by " + item.name;
-      data.asset = new Object();
-      data.asset.media = base_url + "/results/" + month + "/images/" + item.image; 
+      date.asset = new Object();
+      date.asset.media = base_url + "/results/" + month + "/images/" + item.image; 
+      return date;
     });
     json = 
     {
@@ -72,19 +72,17 @@ $(document).ready(function() {
         "asset": {
             "media": base_url + "/logo.png",
             "caption": counts[0][0].split(" ")[0] + " will be taking home the red underpants!"
-       },
-       "date" : events
-      }
-    }
-    console.log(json);
-  createStoryJS({
-    type:   'timeline',
-    width:  '800',
-    height: '600',
-    source: json,
-    embed_id: 'my-timeline',
-    debug: true
-  });
+        },
+        "date" : events
+       }
+     }
+    createStoryJS({
+      type:   'timeline',
+      width:  '800',
+      height: '600',
+      source: json,
+      embed_id: 'my-timeline',
+    });
   };  
   addData(data);
 });
