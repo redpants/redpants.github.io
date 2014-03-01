@@ -86,5 +86,5 @@ $(document).ready(function() {
       font: "SansitaOne-Kameron"
     });
   };  
-  addData(data);
+  //addData(data);
 });
