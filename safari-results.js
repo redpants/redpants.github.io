@@ -1,3 +1,7 @@
+String.prototype.replaceAt=function(index, character) {
+    return this.substr(0, index) + character + this.substr(index+character.length);
+}
+
 data =  
 [
    {"name":"Akash Badshah" , "caption":"Let the games begin"                         , "image":"february0.jpg"       , "time":"2014-02-28 09:52:00"} , 
@@ -23,54 +27,13 @@ data =
    {"name":"Austin Freel"  , "caption":"Sniped Long Range #Zoom"                     , "image":"february20.jpg"      , "time":"2014-02-28 16:10:00"} 
 ];
 
-json = 
-{
-    "timeline":
-    {
-        "headline":"The Main Timeline Headline Goes here",
-        "type":"default",
-        "text":"<p>Intro body text goes here, some HTML is ok</p>",
-        "asset": {
-            "media":"http://yourdomain_or_socialmedialink_goes_here.jpg",
-            "credit":"Credit Name Goes Here",
-            "caption":"Caption text goes here"
-        },
-        "date": [
-            {
-                "startDate":"2011,12,10",
-                "endDate":"2011,12,11",
-                "headline":"Headline Goes Here",
-                "text":"<p>Body text goes here, some HTML is OK</p>",
-                "tag":"This is Optional",
-                "classname":"optionaluniqueclassnamecanbeaddedhere",
-                "asset": {
-                    "media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
-                    "thumbnail":"optional-32x32px.jpg",
-                    "credit":"Credit Name Goes Here",
-                    "caption":"Caption text goes here"
-                }
-            }
-        ],
-        "era": [
-            {
-                "startDate":"2011,12,10",
-                "endDate":"2011,12,11",
-                "headline":"Bullshit",
-                "text":"<p>Body text goes here, some HTML is OK</p>",
-                "tag":"This is Optional"
-            }
-
-        ]
-    }
-};
-
-
 $(document).ready(function() {
   var month = document.URL.split('#')[1];
   if(month == undefined){
     month = "february";
   }
-  var month_url = window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/')) + "/results/" + month + "/";
+  var base_url = window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/'));
+  var month_url = base_url + "/results/" + month + "/";
   $.ajax({
     url: month_url + "results.json",
     dataType: 'json',
@@ -88,55 +51,40 @@ $(document).ready(function() {
     counts = _.sortBy(counts, function(pair){
       return -pair[1];
     }); 
-    console.log(counts)
+    var total = data.length;
+    var participants = counts.length;
+    events = _.map(data, function(item){
+      var date = new Object();
+      date.startDate = item.time;
+      date.endDate = item.time;
+      date.headline = item.caption;
+      date.text = "A fine catch by " + item.name;
+      data.asset = new Object();
+      data.asset.media = base_url + "/results/" + month + "/images/" + item.image; 
+    });
     json = 
     {
       "timeline":
       {
-        "headline":"Joshua Haimson wins",
+        "headline":counts[0][0] + " wins!",
         "type":"default",
-        "text":"<p>Intro body text goes here, some HTML is ok</p>",
+        "text":"A total of " + total + " sightings and " +  participants + " players!",
         "asset": {
-            "media":"http://yourdomain_or_socialmedialink_goes_here.jpg",
-            "credit":"Credit Name Goes Here",
-            "caption":"Caption text goes here"
-        },
-        "date": [
-            {
-                "startDate":"2011,12,10",
-                "endDate":"2011,12,11",
-                "headline":"Headline Goes Here",
-                "text":"<p>Body text goes here, some HTML is OK</p>",
-                "tag":"This is Optional",
-                "classname":"optionaluniqueclassnamecanbeaddedhere",
-                "asset": {
-                    "media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
-                    "thumbnail":"optional-32x32px.jpg",
-                    "credit":"Credit Name Goes Here",
-                    "caption":"Caption text goes here"
-                }
-            }
-        ],
-        "era": [
-            {
-                "startDate":"2011,12,10",
-                "endDate":"2011,12,11",
-                "headline":"Bullshit",
-                "text":"<p>Body text goes here, some HTML is OK</p>",
-                "tag":"This is Optional"
-            }
-
-        ]
+            "media": base_url + "/logo.png",
+            "caption": counts[0][0].split(" ")[0] + " will be taking home the red underpants!"
+       },
+       "date" : events
+      }
     }
-};
-  };
-  
-  addData(data);
+    console.log(json);
   createStoryJS({
     type:   'timeline',
     width:  '800',
     height: '600',
     source: json,
-    embed_id: 'my-timeline'
+    embed_id: 'my-timeline',
+    debug: true
   });
+  };  
+  addData(data);
 });
